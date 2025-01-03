@@ -1,3 +1,6 @@
 [submodule "src/desafio_oxebots"]
 	path = src/desafio_oxebots
 	url = git@github.com:OxeBots/desafio_oxebots.git
+[submodule "src/desafio_oxebots_erick"]
+	path = src/desafio_oxebots_erick
+	url = git@github.com:ericksuzart/desafio_oxebots_erick.git
