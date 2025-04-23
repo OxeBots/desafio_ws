@@ -1,0 +1,2 @@
+flawfinder==2.0.19
+lizard==1.17.24
