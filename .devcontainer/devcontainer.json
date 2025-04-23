@@ -1,0 +1,61 @@
+{
+  "name": "jazzy desktop",
+  "dockerFile": "Dockerfile",
+  "remoteUser": "vscode",
+  "runArgs": [
+    "--network=host",
+    "--cap-add=SYS_PTRACE",
+    "--security-opt=seccomp:unconfined",
+    "--security-opt=apparmor:unconfined",
+    "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+    "--volume=/mnt/wslg:/mnt/wslg",
+    "--ipc=host",
+    "--group-add=video",
+    "--group-add=992",
+    // uncomment to use intel iGPU
+    "--device=/dev/dri"
+    // uncomment the following line to use the host's GPU, if you use nvidia gpu, you need to
+    // install nvidia-container-toolkit on the host
+    // https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker
+    // "--gpus",
+    // "all",
+  ],
+  "containerEnv": {
+    "LIBGL_ALWAYS_SOFTWARE": "0",
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "PULSE_SERVER": "${localEnv:PULSE_SERVER}",
+    "WAYLAND_DISPLAY": "${localEnv:WAYLAND_DISPLAY}",
+    "XDG_RUNTIME_DIR": "${localEnv:XDG_RUNTIME_DIR}"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      },
+      "extensions": [
+        "althack.ament-task-provider",
+        "betwo.b2-catkin-tools",
+        "charliermarsh.ruff",
+        "cschlosser.doxdocgen",
+        "jbenden.c-cpp-flylint",
+        "jeff-hykin.better-cpp-syntax",
+        "ms-azuretools.vscode-docker",
+        "ms-iot.vscode-ros",
+        "ms-python.isort",
+        "ms-python.python",
+        "ms-vscode.cpptools",
+        "pbkit.vscode-pbkit",
+        "redhat.vscode-xml",
+        "redhat.vscode-yaml",
+        "smilerobotics.urdf",
+        "twxs.cmake",
+        "yzhang.markdown-all-in-one"
+      ]
+    }
+  },
+  "postCreateCommand": "while read -r pkg; do pipx install $pkg; done < requirements.txt",
+  "features": { },
+  "mounts": [
+    "source=${localEnv:XDG_RUNTIME_DIR},target=${localEnv:XDG_RUNTIME_DIR},type=bind,consistency=cached"
+  ]
+}
